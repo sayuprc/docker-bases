@@ -1,0 +1,27 @@
+#!/bin/bash
+
+ROOT_DIR=$(cd $(dirname $0); pwd)
+
+PROJECT_NAME=`basename ${ROOT_DIR}`
+
+TEMPLATES="${ROOT_DIR}/templates"
+
+DEVCONTAINER_DIR="${ROOT_DIR}/.devcontainer"
+
+cp "${TEMPLATES}/docker-compose.yml.template" "${ROOT_DIR}/docker-compose.yml"
+sed -i "s/##PROJECT_NAME##/${PROJECT_NAME}/g" "${ROOT_DIR}/docker-compose.yml"
+
+if [ ! -d "${DEVCONTAINER_DIR}" ];
+then
+  mkdir "${DEVCONTAINER_DIR}"
+fi
+
+cp "${TEMPLATES}/devcontainer.json.template" "${DEVCONTAINER_DIR}/devcontainer.json"
+sed -i "s/##PROJECT_NAME##/${PROJECT_NAME}/g" "${DEVCONTAINER_DIR}/devcontainer.json"
+
+read -e -p "ドメイン: " domain
+read -e -p "証明書名: " cert_name
+
+cp "${TEMPLATES}/.env.template" "${ROOT_DIR}/.env"
+sed -i "s/##VIRTUAL_HOST##/${domain}/g" "${ROOT_DIR}/.env"
+sed -i "s/##CERT_NAME##/${cert_name}/g" "${ROOT_DIR}/.env"

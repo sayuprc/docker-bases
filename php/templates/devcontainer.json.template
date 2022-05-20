@@ -1,0 +1,21 @@
+{
+  "name": "##PROJECT_NAME##",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "service": "php",
+  "workspaceFolder": "/var/www/html",
+  "extensions": [
+    "bmewburn.vscode-intelephense-client",
+    "xdebug.php-debug",
+    "christian-kohler.path-intellisense",
+    "junstyle.php-cs-fixer"
+  ],
+  "settings": {
+    "[php]": {
+      "editor.formatOnSave": true,
+      "editor.insertSpaces": true,
+      "editor.tabSize": 4
+    }
+  }
+}

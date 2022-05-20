@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  php:
+    build: ./infra/php
+    image: ${PROJECT_NAME}
+    container_name: ${PROJECT_NAME}
+    environment:
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+    volumes:
+      - ./src:/var/www/html
+      - ./infra/php/php.ini:/usr/local/etc/php/php.ini
+      - ./infra/apache/000-default.conf:/etc/apache2/sites-available/000-default.conf
+    networks:
+      - proxy-network
+
+networks:
+  proxy-network:
+    external: true
+    name: proxy-network
