@@ -9,6 +9,7 @@ services:
       VIRTUAL_HOST: ${VIRTUAL_HOST}
     volumes:
       - ./src:/var/www/html
+      - ##PROJECT_NAME##-store:/var/www/html/vendor
       - ./infra/php/php.ini:/usr/local/etc/php/php.ini
       - ./infra/apache/000-default.conf:/etc/apache2/sites-available/000-default.conf
     networks:
@@ -18,3 +19,6 @@ networks:
   proxy-network:
     external: true
     name: proxy-network
+
+volumes:
+  - ##PROJECT_NAME##-store:
