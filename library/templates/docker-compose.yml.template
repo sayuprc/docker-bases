@@ -21,4 +21,4 @@ networks:
     name: proxy-network
 
 volumes:
-  - ##PROJECT_NAME##-store:
+  ##PROJECT_NAME##-store:
