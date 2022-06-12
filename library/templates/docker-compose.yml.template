@@ -3,10 +3,11 @@ version: '3.9'
 services:
   php:
     build: ./infra/php
-    image: ${PROJECT_NAME}
+    image: library:8.1
     container_name: ${PROJECT_NAME}
     environment:
       VIRTUAL_HOST: ${VIRTUAL_HOST}
+      HTTPS_METHOD: noredirect
     volumes:
       - ./src:/var/www/html
       - ##PROJECT_NAME##-store:/var/www/html/vendor
