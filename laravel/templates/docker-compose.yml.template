@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  php:
+    build: ./infra/php
+    image: ##PROJECT_NAME##
+    container_name: ##PROJECT_NAME##
+    environment:
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+      CERT_NAME: ${CERT_NAME}
+      TZ: Asia/Tokyo
+    volumes:
+      - ./src:/var/www/html
+      - vendor-store:/var/www/html/vendor
+      - node_modules-store:/var/www/html/node_modules
+      - ./infra/php/php.ini:/usr/local/etc/php/php.ini
+      - ./infra/apache/000-default.conf:/etc/apache2/sites-available/000-default.conf
+    networks:
+      - ##PROJECT_NAME##-network
+      - proxy-network
+
+  postgresql:
+    build: ./infra/postgresql
+    image: ##PROJECT_NAME##-db
+    container_name: ##PROJECT_NAME##-db
+    volumes: 
+      - ./database/data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+    ports:
+      - 5432:5432
+    networks:
+      - ##PROJECT_NAME##-network
+
+networks:
+  ##PROJECT_NAME##-network:
+    name: ##PROJECT_NAME##-network
+  proxy-network:
+    external: true
+    name: proxy-network
+
+volumes:
+  vendor-store:
+  node_modules-store:
