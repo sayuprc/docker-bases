@@ -11,7 +11,7 @@ services:
       TZ: Asia/Tokyo
     volumes:
       - ./src:/var/www/html
-      - ##PROJECT_NAME##-store:/var/www/html/vendor
+      - vendor-store:/var/www/html/vendor
       - ./infra/php/php.ini:/usr/local/etc/php/php.ini
       - ./infra/apache/000-default.conf:/etc/apache2/sites-available/000-default.conf
     networks:
@@ -26,4 +26,4 @@ networks:
     name: proxy-network
 
 volumes:
-  ##PROJECT_NAME##-store:
+  vendor-store:
